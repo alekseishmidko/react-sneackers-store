@@ -1,51 +1,67 @@
-const Drawer = () => {
+const Drawer = ({onClose,onRemove, items=[]}) => {
+console.log(items);
     return ( 
-        <div className="overlay" style={{display:"none"}}>
+        <div className="overlay" >
                 <div className="drawer ">
-                <h2 className="drawer--title mb-30 d-flex justify-between ">Корзина     <img className="btn--remove cu-p" src="/img/btn-remove.svg" alt="remove" /></h2>
-                <div className="items">
-                    
-                <div className="cartItem d-flex align-center mb-20" >
-                <div style={{backgroundImage: 'url(/img/sneakers/1.jpg)'}} className="cartItemImg"></div>
-                
-                <div className="mr-20 flex">
-                    <p className="cartItem--title mb-5">Кроссовки Nike  Blazer Mid Suede</p>
-                    <b className="cartItem--text">12 999 руб.</b>
-                </div>
-                <img className="btn--remove" src="/img/btn-remove.svg" alt="remove" />
-                </div>
+                <h2 className="drawer--title mb-30 d-flex justify-between ">Корзина    
+                        <img onClick={onClose}  className="btn--remove cu-p" src="/img/btn-remove.svg" alt="remove" />
+                </h2>
+                  {
+                    items.length > 0 ?  
+                     <div className="items">
 
-                <div className="cartItem d-flex align-center mb-20" >
-                <div style={{backgroundImage: 'url(/img/sneakers/1.jpg)'}} className="cartItemImg"></div>
-                {/* <img className="mr-15" width={70} height={70} src="/img/sneakers/1.jpg" alt="sneakers" /> */}
-                <div className="mr-20 flex">
-                    <p className="cartItem--title mb-5">Кроссовки Nike  Blazer Mid Suede</p>
-                    <b className="cartItem--text">12 999 руб.</b>
-                </div>
-                <img className="btn--remove" src="/img/btn-remove.svg" alt="remove" />
-                </div>
+                        {items.map((obj) => (
+                        <div>
+                        <div key={obj.id} className="cartItem d-flex align-center mb-20">
+                          <div
+                            style={{ backgroundImage: `url(${obj.imgURL})` }}
+                            className="cartItemImg"></div>
 
-                </div>
+                          <div className="mr-20 flex">
+                            <p className="mb-5">{obj.title}</p>
+                            <b>{obj.price} руб.</b>
+                          </div>
+                          <img
+                            onClick={()=> onRemove(obj.id)}
+                            className="removeBtn"
+                            src="img/btn-remove.svg"
+                            alt="Remove"
+                          />
+                        </div>
 
-            <div className="cartTotalBlock">
-                <ul >
-                    <li className="d-flex ">
-                        <span>Итого:</span>
-                        <div></div>
-                        <b>21498 руб.</b>
-                    </li>
+                          <div className="cartTotalBlock">
+                          <ul >
+                              <li className="d-flex ">
+                                  <span>Итого:</span>
+                                  <div></div>
+                                  <b>21498 руб.</b>
+                              </li>
 
-                    <li className="d-flex ">
-                        <span>Налог 5%: </span>
-                        <div></div>
-                        <b>1074 руб.</b>
-                    </li>
-                
-                </ul>
+                              <li className="d-flex ">
+                                  <span>Налог 5%: </span>
+                                  <div></div>
+                                  <b>1074 руб.</b>
+                              </li>
 
-                <button className="greenButton">Оформить заказ <img src="/img/arrow.svg" alt="arrow" /> </button>
-                
-            </div>
+                          </ul>
+
+                          <button className="greenButton">Оформить заказ <img src="/img/arrow.svg" alt="arrow" /> </button>
+
+                          </div>
+
+                          </div>
+                      ))}
+                    </div>
+                       :
+                        <div className="cartEmpty align-center justify-center flex-column flex">
+                          <img className="mb-20" width={120} height={120} src="/img/empty-cart.jpg" alt="empty" />
+                          <h2>Корзина пустая </h2>
+                          <p className="opacity-6">   Добавьте хотя бы одну пару обуви в корзину </p>
+                          <button onClick={onClose} className="greenButton"> Вернуться назад</button>
+                        </div>
+                  }
+
+
                 
             </div>
       </div> 
