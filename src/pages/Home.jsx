@@ -1,10 +1,30 @@
 import React from "react";
 import Card from "../components/Card";
+import AppContext from "../context";
 
+const Home = ({items, onAddToFavourites, onChangeSearchInput,searchValue,setSearchValue,clearInputBtn, onAddToCard, cartItems, isLoading, }) => {
+  const {isItemAdded }= React.useContext(AppContext);
 
-const Home = ({items, onAddToFavourites, onChangeSearchInput,searchValue,setSearchValue,clearInputBtn, onAddToCard}) => {
-    
+const renderItems = () => {
+  const filteredItems = items.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
+  return (isLoading? [...Array(8)] :  filteredItems).map((item, index) => 
+  /* {items.map((item, index) => */
+    <Card 
    
+          key={index}
+          isLoading= {!isLoading}
+          {...item}
+          // id = {item.id}
+          // title={item.title} 
+          // price={item.price} 
+          // imgURL = {item.imgURL}
+          onFavourite={(obj) => onAddToFavourites(obj)}
+          onPlus={(obj) => onAddToCard(obj)}
+          added={isItemAdded(item && item.id)}
+    /> )
+  
+
+}
     return ( 
         <div className="content p-40">
 
@@ -23,17 +43,7 @@ const Home = ({items, onAddToFavourites, onChangeSearchInput,searchValue,setSear
   
           <div className="sneakers d-flex flex-wrap">
             
-                { items.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase())).map((item, index) => 
-                /* {items.map((item, index) => */
-                  <Card 
-                  key={index}
-                  id = {item.id}
-                  title={item.title} 
-                  price={item.price} 
-                  imgURL = {item.imgURL}
-                  onFavourite={(obj) => onAddToFavourites(obj)}
-                  onPlus={(obj) => onAddToCard(obj)}
-                  /> )}
+                {renderItems() }
          
   
           </div>

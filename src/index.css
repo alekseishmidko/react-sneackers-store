@@ -191,6 +191,10 @@ h5{
 .greenButton:hover{
     background: lighten(#9dd558, 5%);
 }
+.greenButton:disabled{
+  background-color:#bebebe;
+  cursor: default !important;
+}
 .greenButton:active{
   background: darken(#9dd558, 5%);
 }
